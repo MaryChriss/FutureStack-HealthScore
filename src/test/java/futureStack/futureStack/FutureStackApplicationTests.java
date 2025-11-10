@@ -1,0 +1,13 @@
+package futureStack.futureStack;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class FutureStackApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
