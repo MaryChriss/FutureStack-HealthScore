@@ -33,18 +33,19 @@ public class CheckInController {
         var saved = checkInService.createCheckIn(user, dto);
         var message = calculator.getScoreMessage(saved.getScore());
 
-        var response = new CheckInResponseDTO(
-                saved.getId(),
-                saved.getDate().toString(),
-                saved.getMood(),
-                saved.getEnergy(),
-                saved.getSleep(),
-                saved.getFocus(),
-                saved.getHoursWorked(),
-                saved.getScore(),
-                message
+        return ResponseEntity.ok(
+                new CheckInResponseDTO(
+                        saved.getId(),
+                        saved.getDate().toString(),
+                        saved.getMood(),
+                        saved.getEnergy(),
+                        saved.getSleep(),
+                        saved.getFocus(),
+                        saved.getHoursWorked(),
+                        saved.getScore(),
+                        message
+                )
         );
-        return ResponseEntity.ok(response);
     }
 
     @GetMapping
@@ -52,9 +53,11 @@ public class CheckInController {
             @AuthenticationPrincipal User user,
             Pageable pageable
     ) {
-        Page<CheckInModel> checkIns = checkInService.getUserCheckInsPaginated(user.getId(), pageable);
-        return ResponseEntity.ok(checkIns.map(c ->
-                new CheckInResponseDTO(
+        Page<CheckInModel> checkIns =
+                checkInService.getUserCheckInsPaginated(user.getId(), pageable);
+
+        return ResponseEntity.ok(
+                checkIns.map(c -> new CheckInResponseDTO(
                         c.getId(),
                         c.getDate().toString(),
                         c.getMood(),
@@ -64,8 +67,8 @@ public class CheckInController {
                         c.getHoursWorked(),
                         c.getScore(),
                         calculator.getScoreMessage(c.getScore())
-                )
-        ));
+                ))
+        );
     }
 
     @GetMapping("/score/today")
@@ -73,18 +76,19 @@ public class CheckInController {
         var checkin = checkInService.getTodayCheckIn(user.getId());
         if (checkin == null) return ResponseEntity.noContent().build();
 
-        var message = calculator.getScoreMessage(checkin.getScore());
-        return ResponseEntity.ok(new CheckInResponseDTO(
-                checkin.getId(),
-                checkin.getDate().toString(),
-                checkin.getMood(),
-                checkin.getEnergy(),
-                checkin.getSleep(),
-                checkin.getFocus(),
-                checkin.getHoursWorked(),
-                checkin.getScore(),
-                message
-        ));
+        return ResponseEntity.ok(
+                new CheckInResponseDTO(
+                        checkin.getId(),
+                        checkin.getDate().toString(),
+                        checkin.getMood(),
+                        checkin.getEnergy(),
+                        checkin.getSleep(),
+                        checkin.getFocus(),
+                        checkin.getHoursWorked(),
+                        checkin.getScore(),
+                        calculator.getScoreMessage(checkin.getScore())
+                )
+        );
     }
 
     @GetMapping("/score/history")
@@ -109,6 +113,12 @@ public class CheckInController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/monthly-average")
+    public ResponseEntity<Double> monthlyAverage(@AuthenticationPrincipal User user) {
+        Double avg = checkInService.getMonthlyAverage(user.getId());
+        return ResponseEntity.ok(avg != null ? avg : 0.0);
+    }
+
     @GetMapping("/weekly-average")
     public ResponseEntity<Double> weeklyAverage(@AuthenticationPrincipal User user) {
         Double avg = checkInService.getWeeklyAverage(user.getId());
@@ -118,21 +128,23 @@ public class CheckInController {
     @GetMapping("/last")
     public ResponseEntity<CheckInResponseDTO> last(@AuthenticationPrincipal User user) {
         var checkIns = checkInService.getUserCheckIns(user.getId());
-        if (checkIns.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+
+        if (checkIns.isEmpty()) return ResponseEntity.noContent().build();
+
         var last = checkIns.get(0);
-        var response = new CheckInResponseDTO(
-                last.getId(),
-                last.getDate().toString(),
-                last.getMood(),
-                last.getEnergy(),
-                last.getSleep(),
-                last.getFocus(),
-                last.getHoursWorked(),
-                last.getScore(),
-                calculator.getScoreMessage(last.getScore())
+
+        return ResponseEntity.ok(
+                new CheckInResponseDTO(
+                        last.getId(),
+                        last.getDate().toString(),
+                        last.getMood(),
+                        last.getEnergy(),
+                        last.getSleep(),
+                        last.getFocus(),
+                        last.getHoursWorked(),
+                        last.getScore(),
+                        calculator.getScoreMessage(last.getScore())
+                )
         );
-        return ResponseEntity.ok(response);
     }
 }
