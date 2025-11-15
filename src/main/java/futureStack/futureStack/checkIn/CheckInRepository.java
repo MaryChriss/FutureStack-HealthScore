@@ -18,7 +18,11 @@ public interface CheckInRepository extends JpaRepository<CheckInModel, Long> {
 
     Page<CheckInModel> findByUser_IdOrderByDateDesc(Long userId, Pageable pageable);
 
+    Optional<CheckInModel> findTopByUser_IdOrderByDateDesc(Long userId);
+
     Optional<CheckInModel> findByUser_IdAndDate(Long userId, LocalDate date);
+
+    List<CheckInModel> findByUser_IdAndDateAfter(Long userId, LocalDate date);
 
     @Query("SELECT AVG(c.score) FROM CheckInModel c WHERE c.user.id = :userId AND c.date >= :startDate")
     Double findAverageScoreSince(@Param("userId") Long userId, @Param("startDate") LocalDate startDate);
