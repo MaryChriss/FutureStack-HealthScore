@@ -17,9 +17,9 @@ public class RecommendationController {
         return ResponseEntity.ok(RecommendationService.generateDailyRecommendation(user));
     }
 
-    @GetMapping("/weekly-summary")
-    public ResponseEntity<?> getWeekly(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(RecommendationService.generateWeeklySummary(user));
+    @GetMapping("/monthly-summary")
+    public ResponseEntity<?> getMonthly(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(RecommendationService.generateMonthlySummary(user));
     }
 
 }

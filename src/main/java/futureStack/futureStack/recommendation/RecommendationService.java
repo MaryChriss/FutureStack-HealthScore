@@ -100,24 +100,24 @@ public class RecommendationService {
         recommendationRepository.save(model);
     }
 
-    public String generateWeeklySummary(User user) {
+    public String generateMonthlySummary(User user) {
 
-        LocalDate sevenDaysAgo = LocalDate.now().minusDays(7);
+        LocalDate thirtyDaysAgo = LocalDate.now().minusDays(30);
 
         List<CheckInModel> list =
-                checkInRepository.findByUser_IdAndDateAfter(user.getId(), sevenDaysAgo);
+                checkInRepository.findByUser_IdAndDateAfter(user.getId(), thirtyDaysAgo);
 
         if (list.isEmpty()) {
-            return messageSource.getMessage("weekly.noData", null, LocaleContextHolder.getLocale());
+            return messageSource.getMessage("monthly.noData", null, LocaleContextHolder.getLocale());
         }
 
         StringBuilder data = new StringBuilder();
         for (CheckInModel c : list) {
             data.append("""
-                    Dia %s:
-                    humor=%d, energia=%d, sono=%d, foco=%d, carga=%d, score=%d
+                Dia %s:
+                humor=%d, energia=%d, sono=%d, foco=%d, carga=%d, score=%d
 
-                    """.formatted(
+                """.formatted(
                     c.getDate(),
                     c.getMood(),
                     c.getEnergy(),
@@ -129,7 +129,7 @@ public class RecommendationService {
         }
 
         String prompt = messageSource.getMessage(
-                "ai.weeklyPrompt",
+                "ai.monthlyPrompt",
                 new Object[]{data.toString()},
                 LocaleContextHolder.getLocale()
         );
@@ -142,7 +142,6 @@ public class RecommendationService {
                         .build())
                 .call()
                 .content();
-
     }
 
 }
