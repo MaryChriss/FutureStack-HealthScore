@@ -202,7 +202,7 @@ GET /api/checkins/last?lang=en_US
 ---
 
 ## 🐳 **Deploy:**
-- **Link para acesso:**: [Download Link](#)
+- **Link para acesso:**: [Download Link](https://futurestack-healthscore.onrender.com)
 ---
 
 ## 📱 **Integração Mobile**
@@ -228,3 +228,4 @@ Este backend é consumido pelo aplicativo mobile em React Native:
 | **Mariana Christina** | RM554773 |
 | **Gabriela Moguinho** |RM556143 |
 | **Henrique Maciel** | RM556480 |
+
