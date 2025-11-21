@@ -43,9 +43,10 @@ O FutureStack – Health Score API é uma plataforma que calcula um índice de b
 **Request:**
 ```json
 {
-  "nome": "Amanda Nunes",
-  "email": "amanda@example.com",
-  "password": "123456"
+  "email": "Helena@example.com",
+  "password": "123456",
+  "nomeUser": "Helena",
+  "phone": "1198787768"
 }
 ```
 
@@ -55,7 +56,7 @@ O FutureStack – Health Score API é uma plataforma que calcula um índice de b
 **Request:**
 ```json
 {
-  "email": "amanda@example.com",
+  "email": "Helena@example.com",
   "password": "123456"
 }
 ```
@@ -64,7 +65,8 @@ O FutureStack – Health Score API é uma plataforma que calcula um índice de b
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6...",
-  "type": "Bearer"
+  "type": "Bearer",
+"email": "Helena@example.com"
 }
 ```
 
@@ -78,7 +80,7 @@ Authorization: Bearer SEU_TOKEN_JWT
 ### 👤 **Gerenciamento de Usuário**
 
 #### **Atualizar Usuário**
-**PUT** `/api/users`
+**PUT** `/users/{id}`
 
 **Request:**
 ```json
@@ -88,15 +90,12 @@ Authorization: Bearer SEU_TOKEN_JWT
 }
 ```
 
-#### **Obter Meus Dados**
-**GET** `/api/users/me`
-
 ---
 
 ### 📊 **Check-ins e Monitoramento**
 
 #### **Criar Check-in**
-**POST** `/api/checkins`
+**POST** `/checkins`
 
 **Request:**
 ```json
@@ -113,21 +112,22 @@ Authorization: Bearer SEU_TOKEN_JWT
 ```json
 {
   "id": 42,
-  "date": "2025-11-16T19:22:10.402",
+  "date": "2025-11-21",
   "score": 720,
   "mood": 6,
   "energy": 7,
   "sleep": 6,
   "focus": 8,
-  "hoursWorked": 5
+  "hoursWorked": 5,
+"message": "Bom! Continue mantendo o equil�brio."
 }
 ```
 
 #### **Último Check-in**
-**GET** `/api/checkins/last`
+**GET** `/checkins/last`
 
 #### **Média Mensal**
-**GET** `/api/checkins/monthly-avg`
+**GET** `/checkins/weekly-average`
 
 ---
 
@@ -138,16 +138,14 @@ Authorization: Bearer SEU_TOKEN_JWT
 
 **Response:**
 ```json
-{
-  "recommendation": "Hoje seu nível de sono está abaixo da média. Priorize um descanso mais profundo esta noite..."
-}
+Com humor equilibrado, energia boa, sono estável, foco forte e carga de trabalho moderada, seu desempenho está em excelente nível, refletindo um equilíbrio saudável entre produtividade e bem‑estar. Essa combinação favorece a clareza de pensamento e a resistência ao estresse, permitindo que você alcance resultados consistentes. Mantenha essa rotina, pois sustenta a qualidade do seu trabalho e a satisfação pessoal. Reserve 10 minutos para alongamento e respiração profunda antes de cada bloco de trabalho.
 ```
 
 #### **Resumo Semanal/Mensal**
 **GET** `/api/ai/monthly-summary`
 
 #### **Chat com IA**
-**POST** `/api/ai/chat`
+**POST** `/chat`
 
 **Request:**
 ```json
@@ -167,15 +165,18 @@ Authorization: Bearer SEU_TOKEN_JWT
 
 ## 🌍 **Internacionalização (i18n)**
 
-A API suporta **português (pt-BR)** e **inglês (en-US)**.
+A API suporta **português (pt-BR)**, **inglês (en-US)**, **Espanhol (es-ES)**
 
 **Exemplo de uso:**
 ```bash
 # Português (padrão)
-GET /api/checkins/last
+GET /checkins/last?lang=pt_BR
 
 # Inglês
-GET /api/checkins/last?lang=en_US
+GET /checkins/last?lang=en_US
+
+# Inglês
+GET /checkins/last?lang=es_ES
 ```
 
 ---
@@ -195,7 +196,7 @@ GET /api/checkins/last?lang=en_US
   "userId": 1,
   "checkInId": 42,
   "score": 720,
-  "timestamp": "2025-11-16T19:22:10.402"
+  "timestamp": "2025-11-21"
 }
 ```
 
@@ -209,15 +210,14 @@ GET /api/checkins/last?lang=en_US
 
 Este backend é consumido pelo aplicativo mobile em React Native:
 
-- **Repositório Frontend**: [github.com/seu-usuario/futurestack-mobile](https://github.com/seu-usuario/futurestack-mobile)
-- **APK**: [Download Link](#)
+- **APK**: [Download Link](https://expo.dev/accounts/marychriss/projects/gs2-futureStack-HealthScore/builds/0037f534-50e1-4420-8f86-19c818531244)
 
 ---
 
 ## 🎬 **Vídeos e Demonstrações**
 
-🎯 **Vídeo Pitch**: [Link para o vídeo pitch](#)  
-📱 **Vídeo Demonstração**: [Link para demonstração](#)  
+🎯 **Vídeo Pitch**: [Link para o vídeo pitch](https://youtu.be/i2YS-esLwMg?si=UDDCjzt3UO7S_OPe)  
+📱 **Vídeo Demonstração**: [Link](https://youtu.be/Q4rdv_7zLEI?si=tRc9SSRSrqiVqWpY)  
 
 ---
 
@@ -228,4 +228,5 @@ Este backend é consumido pelo aplicativo mobile em React Native:
 | **Mariana Christina** | RM554773 |
 | **Gabriela Moguinho** |RM556143 |
 | **Henrique Maciel** | RM556480 |
+
 
