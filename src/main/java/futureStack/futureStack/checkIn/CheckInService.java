@@ -89,6 +89,73 @@ public class CheckInService {
         return saved;
     }
 
+    @CacheEvict(allEntries = true)
+    public CheckInModel updateCheckIn(Long userId, Long id, CheckInRequestDTO dto) {
+
+        var checkin = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException(
+                        messageSource.getMessage(
+                                "checkin.not.found",
+                                null,
+                                LocaleContextHolder.getLocale()
+                        )
+                ));
+
+        if (!checkin.getUser().getId().equals(userId)) {
+            throw new RuntimeException(
+                    messageSource.getMessage(
+                            "checkin.forbidden",
+                            null,
+                            LocaleContextHolder.getLocale()
+                    )
+            );
+        }
+
+        checkin.setMood(dto.getMood());
+        checkin.setEnergy(dto.getEnergy());
+        checkin.setSleep(dto.getSleep());
+        checkin.setFocus(dto.getFocus());
+        checkin.setHoursWorked(dto.getHoursWorked());
+
+        int newScore = calculator.calculateScore(
+                dto.getMood(),
+                dto.getEnergy(),
+                dto.getSleep(),
+                dto.getFocus(),
+                dto.getHoursWorked()
+        );
+
+        checkin.setScore(newScore);
+
+        return repository.save(checkin);
+    }
+
+    @CacheEvict(allEntries = true)
+    public void deleteCheckIn(Long userId, Long id) {
+
+        var checkin = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException(
+                        messageSource.getMessage(
+                                "checkin.not.found",
+                                null,
+                                LocaleContextHolder.getLocale()
+                        )
+                ));
+
+        if (!checkin.getUser().getId().equals(userId)) {
+            throw new RuntimeException(
+                    messageSource.getMessage(
+                            "checkin.delete.forbidden",
+                            null,
+                            LocaleContextHolder.getLocale()
+                    )
+            );
+        }
+
+        repository.delete(checkin);
+    }
+
+
     @Cacheable(value = "checkins_user", key = "#userId")
     public List<CheckInModel> getUserCheckIns(Long userId) {
         return repository.findByUser_IdOrderByDateDesc(userId);
