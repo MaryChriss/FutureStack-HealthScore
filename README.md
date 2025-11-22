@@ -12,7 +12,7 @@ O FutureStack – Health Score API é uma plataforma que calcula um índice de b
 - **Spring Data JPA**
 - **Bean Validation**
 - **Spring Cache**
-- **Internacionalização** (pt-BR e en-US)
+- **Internacionalização** (pt-BR, en-US, es-ES)
 - **RabbitMQ** (Mensageria)
 - **Spring AI** (Groq)
 - **Maven**
@@ -28,7 +28,7 @@ O FutureStack – Health Score API é uma plataforma que calcula um índice de b
 - 💬 **Chat de Suporte Emocional** com IA
 - ⚡ **Processamento Assíncrono** com RabbitMQ
 - 🚀 **Cache** para otimização de performance
-- 🌍 **Internacionalização** (pt-BR e en-US)
+- 🌍 **Internacionalização** (pt-BR, en-US, es-ES)
 - 📈 **Relatórios e Métricas** (média mensal, resumos)
 
 ---
@@ -217,7 +217,7 @@ Este backend é consumido pelo aplicativo mobile em React Native:
 ## 🎬 **Vídeos e Demonstrações**
 
 🎯 **Vídeo Pitch**: [Link para o vídeo pitch](https://youtu.be/i2YS-esLwMg?si=UDDCjzt3UO7S_OPe)  
-📱 **Vídeo Demonstração**: [Link](https://youtu.be/Q4rdv_7zLEI?si=tRc9SSRSrqiVqWpY)  
+📱 **Vídeo Demonstração**: [Link](https://youtu.be/cATfS39D0Sk?si=hEkxoIIZGFNK88rg)  
 
 ---
 
@@ -228,6 +228,7 @@ Este backend é consumido pelo aplicativo mobile em React Native:
 | **Mariana Christina** | RM554773 |
 | **Gabriela Moguinho** |RM556143 |
 | **Henrique Maciel** | RM556480 |
+
 
 
 
