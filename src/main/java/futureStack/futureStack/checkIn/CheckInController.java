@@ -137,6 +137,39 @@ public class CheckInController {
         return ResponseEntity.ok(avg != null ? avg : 0.0);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CheckInResponseDTO> update(
+            @AuthenticationPrincipal User user,
+            @PathVariable Long id,
+            @Valid @RequestBody CheckInRequestDTO dto
+    ) {
+        var updated = checkInService.updateCheckIn(user.getId(), id, dto);
+
+        var response = new CheckInResponseDTO(
+                updated.getId(),
+                updated.getDate().toString(),
+                updated.getMood(),
+                updated.getEnergy(),
+                updated.getSleep(),
+                updated.getFocus(),
+                updated.getHoursWorked(),
+                updated.getScore(),
+                calculator.getScoreMessage(updated.getScore())
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+            @AuthenticationPrincipal User user,
+            @PathVariable Long id
+    ) {
+        checkInService.deleteCheckIn(user.getId(), id);
+        return ResponseEntity.noContent().build();
+    }
+
+
     @GetMapping("/weekly-average")
     public ResponseEntity<Double> weeklyAverage(@AuthenticationPrincipal User user) {
         Double avg = checkInService.getWeeklyAverage(user.getId());
